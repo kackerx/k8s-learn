@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cilium-with-kubeproxy
+  name: cilium-with-kubeproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cilium-with-kubeproxy
+  template:
+    metadata:
+      labels:
+        app: cilium-with-kubeproxy
+    spec:
+      containers:
+        - name: nettoolbox
+          image: docker.io/vyos/vyos-build:current-arm64
+          args: [ "sleep" , "36000" ]
+          securityContext:
+            privileged: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serversvc
+spec:
+  selector:
+    app: cilium-with-kubeproxy
+  ports:
+    - name: cni
+      port: 80
+      targetPort: 80
+      nodePort: 32000
+  type: NodePort
+
+

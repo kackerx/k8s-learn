@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-downward-volume
+  labels:
+    app: busy
+    rack: rack-22
+    cluster: test-cluster
+spec:
+  containers:
+    - name: test-container
+      image: busybox
+      command: [ "sh", "-c" ]
+      args:
+        - while true; do
+          if [[ -e /etc/podinfo/labels ]]; then
+          echo -en '\n\n'; cat /etc/podinfo/labels; fi;
+          sleep 5;
+          done;
+      volumeMounts:
+        - mountPath: /etc/podinfo
+          name: podinfo
+          readOnly: false
+      imagePullPolicy: IfNotPresent
+  volumes:
+    - name: podinfo
+      projected:
+        sources:
+          - downwardAPI:
+              items:
+                - path: "labels"
+                  fieldRef:
+                    fieldPath: metadata.labels
+  restartPolicy: Always

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  shareProcessNamespace: true
+  containers:
+    - name: nginx
+      image: nginx
+      imagePullPolicy: IfNotPresent
+    - name: shell
+      image: busybox
+      stdin: true
+      tty: true

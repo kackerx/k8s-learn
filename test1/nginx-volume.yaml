@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-volume
+  labels:
+    app: nginx-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: two-container
+      labels:
+        app: nginx
+    spec:
+      volumes:
+        - name: shared-data
+          hostPath:
+            path: /data
+      containers:
+        - name: nginx-container
+          image: nginx
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: shared-data
+
+        - name: centos-container
+          image: centos
+          volumeMounts:
+            - mountPath: /pod-data
+              name: shared-data
+          command: [ "/bin/sh" ]
+          args: [ "-c", "echo hello from centos > /pod-data/index.html && sleep 1000" ]
+      restartPolicy: Always

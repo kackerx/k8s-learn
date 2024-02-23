@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService # 对应Envoy的route
+metadata:
+  name: simple
+spec:
+  gateways:
+    - simple # 该route转发规则和geteway=simple关联, 即下方gateway配置
+  hosts:
+    - simple.kacker.io # 处理该host
+  http:
+    - match:
+        - port: 80
+      route:
+        - destination:
+            host: simple.simple.svc.cluster.local # match80端口请求转发到simple这个service
+            port:
+              number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway # 对应Envoy的listener
+metadata:
+  name: simple
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - simple.kacker.io # 处理该host
+      port:
+        name: http-simple
+        number: 80
+        protocol: HTTP
