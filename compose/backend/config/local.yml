@@ -1,0 +1,33 @@
+jiaozhu:
+  qihao: 400
+  data: 1,4,3,7,5,5
+  tema: 10
+  date: 2023/9/23
+  shengxiao: 牛马蛇龙兔虎--蛇
+env: local
+http:
+  port: 8000
+security:
+  api_sign:
+    app_key: 123456
+    app_security: 123456
+  jwt:
+    key: QQYnRFerJTSEcrfB89fw8prOaObmrch8
+data:
+  mysql:
+    user: go_elm:Beier123@tcp(127.0.0.1:3306)/go_elm?charset=utf8mb4&parseTime=True&loc=Local
+  redis:
+    addr: 127.0.0.1:6379
+    password: ""
+    db: 0
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+
+log:
+  log_level: error
+  encoding: json           # json or console
+  log_file_name: "./storage/logs/server.log"
+  max_backups: 30
+  max_age: 7
+  max_size: 1024
+  compress: true

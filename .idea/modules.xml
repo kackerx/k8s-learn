@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/catalog.iml" filepath="$PROJECT_DIR$/catalog.iml" />
       <module fileurl="file://$PROJECT_DIR$/go-crd.iml" filepath="$PROJECT_DIR$/go-crd.iml" />
       <module fileurl="file://$PROJECT_DIR$/go-httpserver.iml" filepath="$PROJECT_DIR$/go-httpserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ssc.iml" filepath="$PROJECT_DIR$/ssc.iml" />
       <module fileurl="file://$PROJECT_DIR$/webapp.iml" filepath="$PROJECT_DIR$/webapp.iml" />
     </modules>
   </component>

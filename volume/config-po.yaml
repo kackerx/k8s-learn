@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-po
+  labels:
+    app: myapp
+spec:
+  containers:
+    - name: cm-container
+      image: busybox:latest
+      command: [ 'sh', '-c', 'ls /data/config && sleep 3600' ]
+      volumeMounts:
+        - mountPath: /data/config
+          name: my-cm
+  volumes:
+    - name: my-cm
+      configMap:
+        name: my-conf
+  restartPolicy: Always
+
+

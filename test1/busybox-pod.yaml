@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-text
+  labels:
+    app: busy-text
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - preference:
+            matchExpressions:
+              - key: app
+                operator: In
+                values: [ '' ]
+          weight: 1
+  containers:
+    - name: busy-text
+      image: busybox:latest
+      imagePullPolicy: IfNotPresent
+      command: [ 'sh', '-c', 'echo hello busy && sleep 3600' ]
+

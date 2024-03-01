@@ -1,0 +1,24 @@
+version: '3'
+services:
+  backend:
+    image: kacker/ssc-backend
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    volumes:
+      - ./backend/storage:/app/storage
+      - uploads:/app/uploads
+      - ./backend/config:/app/config
+    restart: always
+  frontend:
+    image: nginx
+    volumes:
+      - ./frontend/dist:/frontend/dist
+      - ./0.default.conf:/etc/nginx/conf.d/0.default.conf
+      - uploads:/frontend/uploads
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+volumes:
+  uploads:

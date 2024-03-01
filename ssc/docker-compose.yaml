@@ -1,0 +1,24 @@
+version: '3'
+services:
+  backend:
+    image: kacker/ttc-backend
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    volumes:
+      - ./backend/storage:/app/storage
+      - ./backend/uploads:/app/uploads
+      - ./backend/config:/app/config
+    restart: always
+  frontend:
+    image: nginx
+    volumes:
+      - ./frontend/dist:/frontend/dist
+      - ./backend/uploads:/frontend/uploads
+      - ./web.conf:/etc/nginx/conf.d/web.conf
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+

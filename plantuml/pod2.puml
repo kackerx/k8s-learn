@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class spec {
+    affinity
+}
+
+class affinity {
+    nodeAffinity
+    podAffinity
+    podAntiAffinity
+}
+
+class nodeAffinity {
+    requiredDuringSchedulingRequiredDuringExecution
+    preferredDuringSchedulingIgnoreDuringExecution
+}
+'
+class requiredDuringSchedulingRequiredDuringExecution {
+    nodeSelectorTrems
+}
+
+enum nodeSelectorTrems {
+
+}
+'
+enum matchExpressions {
+    key: <label_name>
+    operator: In
+    values: [<value>]
+}
+
+enum preferredDuringSchedulingIgnoreDuringExecution {
+    weight
+    preference
+}
+
+class preference {
+    matchExpressions
+}
+
+spec::affinity *-r-> affinity
+affinity::nodeAffinity *-d-> nodeAffinity
+nodeAffinity::requiredDuringSchedulingRequiredDuringExecution *--> requiredDuringSchedulingRequiredDuringExecution
+nodeAffinity::preferredDuringSchedulingIgnoreDuringExecution *--> preferredDuringSchedulingIgnoreDuringExecution
+requiredDuringSchedulingRequiredDuringExecution::nodeSelectorTrems *-d-> nodeSelectorTrems
+nodeSelectorTrems *--> matchExpressions
+preferredDuringSchedulingIgnoreDuringExecution::preference *-l-> preference
+preference::matchExpressions *-d-> matchExpressions
+@enduml
